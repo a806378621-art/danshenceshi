@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#151820">
+<meta name="description" content="30 道生活情景题，定位你的脱单堵点型号——堵在哪、为什么、怎么疏。不打分，只给路。">
+<title>我还要单多久 · 脱单堵点诊断</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%99%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/style.css?v=4">
+</head>
+<body>
+<div class="phone">
+
+  <!-- ============ 屏幕一：落地页 ============ -->
+  <section id="screen-landing" class="screen active">
+    <header class="lp-top">
+      <div class="brand">
+        <span class="brand-name">我还要单多久</span>
+        <span class="brand-sub">· 脱单堵点诊断</span>
+      </div>
+      <span class="onair"><i class="dot"></i>FM 深夜电台</span>
+    </header>
+
+    <div class="hero">
+      <p class="hero-kicker">30 道生活情景题 · 约 3 分钟</p>
+      <h1 class="hero-title">不是你不配，<br>是你的脱单管道<b>堵了</b></h1>
+      <p class="hero-sub">做完 30 道题，定位你的<b>脱单堵点型号</b>——堵在哪、为什么、怎么疏。不打分，只给路。</p>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat"><b>30</b><span>道情景题</span></div>
+      <div class="stat"><b>6</b><span>轴坐标</span></div>
+      <div class="stat"><b>16</b><span>个堵点型号</span></div>
+    </div>
+
+    <div class="samples">
+      <p class="samples-title">看看你是哪一款 <span>› 左右滑动</span></p>
+      <div class="samples-track" id="samplesTrack"></div>
+      <p class="samples-note">其中 1 个是隐藏款，六轴全均衡才会出现</p>
+    </div>
+
+    <div class="lp-cta">
+      <button class="btn btn-primary btn-block" id="btnStart" type="button">开始诊断</button>
+      <p class="lp-note">有对象也能测——看你当年卡在哪型。</p>
+    </div>
+
+    <footer class="compliance">
+      <p id="lpCompliance"></p>
+      <p>© 我还要单多久 · 脱单堵点诊断</p>
+    </footer>
+  </section>
+
+  <!-- ============ 屏幕二：条件档案 ============ -->
+  <section id="screen-profile" class="screen">
+    <header class="sub-head">
+      <button class="btn-back" id="btnProfileBack" type="button" aria-label="返回">‹</button>
+      <div class="sub-head-text">
+        <h2>先来一份快速档案</h2>
+        <p>5 个单选，让建议更贴合你的处境</p>
+      </div>
+    </header>
+
+    <div class="privacy-note">
+      <span class="lock">🔒</span>
+      <span id="privacyText"></span>
+    </div>
+
+    <div id="profileGroups"></div>
+
+    <button class="btn btn-primary btn-block" id="btnToQuiz" type="button" disabled>开始答题</button>
+    <p class="profile-hint">档案只影响倒计时环境系数和建议适配，不给你的条件打分</p>
+  </section>
+
+  <!-- ============ 屏幕三：答题 ============ -->
+  <section id="screen-quiz" class="screen">
+    <header class="quiz-head">
+      <button class="btn-back" id="btnQuizBack" type="button" aria-label="返回">‹</button>
+      <div class="quiz-progress">
+        <div class="quiz-progress-text">第 <span id="quizNo">1</span> / 30 题</div>
+        <div class="progress"><i id="progressFill"></i></div>
+      </div>
+    </header>
+
+    <div class="qcard">
+      <p class="q-index" id="qIndex">Q1</p>
+      <h3 class="q-text" id="qText"></h3>
+      <div class="options" id="qOptions"></div>
+    </div>
+
+    <p class="quiz-hint" id="quizHint">选最接近你的一个，随时可以返回改选</p>
+    <button class="btn btn-primary btn-block" id="btnFinish" type="button" hidden>查看我的诊断报告</button>
+  </section>
+
+  <!-- ============ 屏幕四：诊断中 ============ -->
+  <section id="screen-loading" class="screen">
+    <div class="loading-wrap">
+      <div class="eq"><i></i><i></i><i></i><i></i><i></i></div>
+      <p class="loading-text" id="loadingText">正在接通你的脱单管道…</p>
+      <p class="loading-sub">全部计算在本机完成</p>
+    </div>
+  </section>
+
+  <!-- ============ 屏幕五：诊断报告 ============ -->
+  <section id="screen-report" class="screen">
+    <div class="report-bar">
+      <span class="report-serial" id="reportSerial">脱单堵点诊断书 No.0000</span>
+      <button class="btn-mini" id="btnRestart" type="button">重新测一次</button>
+    </div>
+
+    <!-- 型号揭晓（翻面卡） -->
+    <div class="flip" id="flipCard">
+      <div class="flip-inner">
+        <div class="flip-face flip-cover">
+          <p class="cover-kicker">脱单堵点诊断书</p>
+          <p class="cover-no" id="coverNo">No.0000</p>
+          <div class="cover-seal">诊断中</div>
+          <p class="cover-tip">正在翻面揭晓…</p>
+        </div>
+        <div class="flip-face flip-front" id="flipFront">
+          <p class="front-kicker">你的脱单堵点型号是</p>
+          <h2 class="front-name" id="typeName"></h2>
+          <p class="front-meme" id="typeMeme"></p>
+          <div class="front-badges" id="typeBadges"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 脱单倒计时 -->
+    <div class="card" id="cardCountdown">
+      <div class="card-head">
+        <h3>你的预计脱单倒计时</h3>
+        <span class="badge-ent" id="cdBadge">娱乐测算</span>
+      </div>
+      <div class="cd-main">
+        <span class="cd-num" id="cdNum">0</span>
+        <span class="cd-unit">个月</span>
+      </div>
+      <div class="cd-bar"><i id="cdBarFill"></i></div>
+      <div class="cd-bill" id="cdBill"></div>
+      <p class="cd-note">但注意，这是「不疏通堵点」的算法。每疏通一个堵点，这个数字都会肉眼可见地缩短——脱单不是等来的，是疏通出来的。</p>
+    </div>
+
+    <!-- 堵点分析 -->
+    <div class="card">
+      <div class="card-head">
+        <h3>堵点分析</h3>
+        <span class="card-sub" id="analysisAxis"></span>
+      </div>
+      <p class="analysis" id="typeAnalysis"></p>
+    </div>
+
+    <!-- 疏通建议 -->
+    <div class="card">
+      <div class="card-head">
+        <h3>疏通建议</h3>
+      </div>
+      <ol class="tips" id="typeTips"></ol>
+    </div>
+
+    <!-- 副堵点 -->
+    <div class="card card-subtype">
+      <div class="card-head"><h3>副堵点</h3></div>
+      <p class="sub-line">你还有点 <b id="subName"></b> 的影子</p>
+      <p class="sub-meme" id="subMeme"></p>
+      <p class="sub-analysis" id="subAnalysis"></p>
+    </div>
+
+    <!-- 六脉图 -->
+    <div class="card">
+      <div class="card-head">
+        <h3>六脉图</h3>
+        <span class="card-sub">六轴坐标（-100 ~ +100）</span>
+      </div>
+      <div id="pulseChart"></div>
+      <p class="pulse-legend">条形偏向一侧，只代表你的风格坐标，不代表好坏。</p>
+    </div>
+
+    <!-- 最合拍型号 -->
+    <div class="card">
+      <div class="card-head"><h3>最合拍型号</h3></div>
+      <p class="match-text" id="matchText"></p>
+      <div class="match-chips" id="matchChips"></div>
+    </div>
+
+    <!-- 分享引导 -->
+    <div class="card card-share">
+      <div class="card-head">
+        <h3>晒出你的型号</h3>
+        <span class="card-sub">自嘲梗，才是最好的传播</span>
+      </div>
+      <canvas id="shareCanvas" width="750" height="1000"></canvas>
+      <div class="share-btns">
+        <button class="btn btn-primary" id="btnSaveImg" type="button">保存分享图</button>
+        <button class="btn btn-ghost" id="btnCopyText" type="button">复制晒图文案</button>
+      </div>
+      <p class="share-hint">手机上也可以长按图片保存 · 转发给那个朋友，懂的都懂</p>
+    </div>
+
+    <footer class="compliance">
+      <p id="reportCompliance"></p>
+      <p>测算本地完成 · 信息不会上传</p>
+    </footer>
+  </section>
+
+  <!-- 型号详情弹层 -->
+  <div class="modal-mask" id="modalMask" hidden>
+    <div class="modal-card">
+      <p class="modal-kicker">堵点型号</p>
+      <h3 class="modal-name" id="modalName"></h3>
+      <p class="modal-meme" id="modalMeme"></p>
+      <p class="modal-analysis" id="modalAnalysis"></p>
+      <button class="btn btn-ghost btn-block" id="modalClose" type="button">知道了</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="assets/js/data.js?v=4"></script>
+<script src="assets/js/engine.js?v=4"></script>
+<script src="assets/js/app.js?v=4"></script>
+</body>
+</html>
